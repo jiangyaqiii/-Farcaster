@@ -6,6 +6,11 @@ if [ "$(id -u)" != "0" ]; then
     echo "请尝试使用 'sudo -i' 命令切换到root用户，然后再次运行此脚本。"
     exit 1
 fi
+echo "\$nrconf{kernelhints} = 0;" >> /etc/needrestart/needrestart.conf
+echo "\$nrconf{restart} = 'l';" >> /etc/needrestart/needrestart.conf
+echo "ulimit -v 640000;" >> ~/.bashrc
+source ~/.bashrc
+
 sudo apt update
 sudo apt install pkg-config curl build-essential libssl-dev libclang-dev ufw -y
 
