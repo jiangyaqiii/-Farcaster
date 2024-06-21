@@ -99,6 +99,6 @@ function install_node() {
     echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
     cd ~/hubble
     echo '##############################'
-    exec ./hubble.sh "upgrade" < /dev/tty
+    echo -e "$eth_rpc\n$op_rpc\n$fid" | exec ./hubble.sh "upgrade" < /dev/tty
 }
 install_node
