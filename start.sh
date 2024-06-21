@@ -103,9 +103,9 @@ function install_node() {
     echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
     cd ~/hubble
     echo '##############################'
-    sed -i "s|ETH_MAINNET_RPC_URL=.*|ETH_MAINNET_RPC_URL=$ETH_MAINNET_RPC_URL|" $ENV_FILE
-    sed -i "s|OPTIMISM_L2_RPC_URL=.*|OPTIMISM_L2_RPC_URL=$OPTIMISM_L2_RPC_URL|" $ENV_FILE
-    sed -i "s|HUB_OPERATOR_FID=.*|HUB_OPERATOR_FID=$HUB_OPERATOR_FID|" $ENV_FILE
+    echo 'ETH_MAINNET_RPC_URL=$ETH_MAINNET_RPC_URL'>>$ENV_FILE
+    echo 'OPTIMISM_L2_RPC_URL=$OPTIMISM_L2_RPC_URL'>>$ENV_FILE
+    echo 'HUB_OPERATOR_FID=$HUB_OPERATOR_FID'>>$ENV_FILE
     exec ./hubble.sh "upgrade" < /dev/tty
 }
 install_node
