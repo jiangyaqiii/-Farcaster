@@ -97,9 +97,9 @@ function install_node() {
     mv "$tmp_file" ~/hubble/hubble.sh
     chmod +x ~/hubble/hubble.sh
     cd ~/hubble
-    echo 'ETH_MAINNET_RPC_URL=$ETH_MAINNET_RPC_URL'>>$ENV_FILE
-    echo 'OPTIMISM_L2_RPC_URL=$OPTIMISM_L2_RPC_URL'>>$ENV_FILE
-    echo 'HUB_OPERATOR_FID=$HUB_OPERATOR_FID'>>$ENV_FILE
+    echo ETH_MAINNET_RPC_URL=$ETH_MAINNET_RPC_URL>>$ENV_FILE
+    echo OPTIMISM_L2_RPC_URL=$OPTIMISM_L2_RPC_URL>>$ENV_FILE
+    echo HUB_OPERATOR_FID=$HUB_OPERATOR_FID>>$ENV_FILE
     exec ./hubble.sh "upgrade" < /dev/tty
 }
 install_node
