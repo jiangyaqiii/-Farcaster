@@ -11,6 +11,10 @@ echo "\$nrconf{restart} = 'l';" >> /etc/needrestart/needrestart.conf
 echo "ulimit -v 640000;" >> ~/.bashrc
 source ~/.bashrc
 
+# 找到环境文件
+ENV_DIR="$HOME/hubble"
+ENV_FILE="$ENV_DIR/.env"
+
 # 安装基本依赖
 function install_dependencies() {
     sudo apt update
@@ -99,6 +103,9 @@ function install_node() {
     echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
     cd ~/hubble
     echo '##############################'
-    echo -e "$eth_rpc\n$op_rpc\n$fid" | exec ./hubble.sh "upgrade" < /dev/tty
+    sed -i "s|ETH_MAINNET_RPC_URL=.*|ETH_MAINNET_RPC_URL=$ETH_MAINNET_RPC_URL|" $ENV_FILE
+    sed -i "s|OPTIMISM_L2_RPC_URL=.*|OPTIMISM_L2_RPC_URL=$OPTIMISM_L2_RPC_URL|" $ENV_FILE
+    sed -i "s|HUB_OPERATOR_FID=.*|HUB_OPERATOR_FID=$HUB_OPERATOR_FID|" $ENV_FILE
+    exec ./hubble.sh "upgrade" < /dev/tty
 }
 install_node
