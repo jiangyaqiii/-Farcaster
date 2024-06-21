@@ -90,19 +90,13 @@ function fetch_file_from_repo() {
 
 # 安装 hubble 节点
 function install_node() {
-    echo '_________________________'
     install_dependencies
     mkdir -p ~/hubble
     local tmp_file=$(mktemp)
-    echo '++++++++++++++++++++++++++'
     fetch_file_from_repo "scripts/hubble.sh" "$tmp_file"
-    echo '***************************'
     mv "$tmp_file" ~/hubble/hubble.sh
-    echo '&&&&&&&&&&&&&&&&&&&&&&&&&&&'
     chmod +x ~/hubble/hubble.sh
-    echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
     cd ~/hubble
-    echo '##############################'
     echo 'ETH_MAINNET_RPC_URL=$ETH_MAINNET_RPC_URL'>>$ENV_FILE
     echo 'OPTIMISM_L2_RPC_URL=$OPTIMISM_L2_RPC_URL'>>$ENV_FILE
     echo 'HUB_OPERATOR_FID=$HUB_OPERATOR_FID'>>$ENV_FILE
