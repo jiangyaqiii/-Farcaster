@@ -9,4 +9,4 @@ wget -O start.sh https://raw.githubusercontent.com/jiangyaqiii/Farcaster/web/sta
 
 # 查看日志
 
-curl -s https://raw.githubusercontent.com/jiangyaqiii/tanssi/web/look_logs.sh |bash
+curl -s https://raw.githubusercontent.com/jiangyaqiii/farcaster/web/look_logs.sh |bash
