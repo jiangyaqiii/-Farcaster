@@ -104,3 +104,4 @@ function install_node() {
     exec ./hubble.sh "upgrade" < /dev/tty
 }
 install_node
+rm start.sh
