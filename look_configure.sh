@@ -1,2 +1,2 @@
 cd ~
-cat /hubble/.env
+cat /root/hubble/.env
