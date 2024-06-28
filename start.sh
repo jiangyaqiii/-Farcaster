@@ -106,7 +106,7 @@ function install_node() {
     echo OPTIMISM_L2_RPC_URL=$OPTIMISM_L2_RPC_URL>>$ENV_FILE
     echo HUB_OPERATOR_FID=$HUB_OPERATOR_FID>>$ENV_FILE
     pwd
-    exec ./hubble.sh "upgrade" < /dev/tty
+    exec ./hubble.sh "upgrade"
 }
 install_node
 cd
