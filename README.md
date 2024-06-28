@@ -14,3 +14,7 @@ curl -s https://raw.githubusercontent.com/jiangyaqiii/farcaster/web/look_logs.sh
 # 查看配置文件
 
 curl -s https://raw.githubusercontent.com/jiangyaqiii/farcaster/web/look_configure.sh |bash
+
+# 卸载旧节点
+
+curl -s https://raw.githubusercontent.com/jiangyaqiii/farcaster/web/uninstall.sh |bash
