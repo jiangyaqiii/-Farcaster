@@ -1,2 +1,2 @@
-cd $HOME/hubble
-docker compose logs --tail=20
+cd
+/root/hubble/hubble.sh logs
