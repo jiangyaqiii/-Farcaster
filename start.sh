@@ -31,19 +31,15 @@ function install_dependencies() {
     # 检查 Docker 是否已安装
     if ! command -v docker &> /dev/null; then
         echo "未检测到 Docker，正在安装..."
-        sudo apt update -y
-        sudo apt install apt-transport-https ca-certificates curl gnupg lsb-release -y
-        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+        sudo apt-get install ca-certificates curl gnupg lsb-release -y
+        sudo mkdir -p /etc/apt/keyrings
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
         echo \
-      "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-      $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-        sudo apt update -y
-        sudo apt install docker-ce docker-ce-cli containerd.io -y
-        sudo curling -s -L "https://github.com/docker/compose/releasesPLY4/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-        sudo chmod +x /usr/local/bin/docker-compose
-        sudo docker run hello-world
-        docker --version
-        docker-compose --version
+        "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+        $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+        sudo chmod a+r /etc/apt/keyrings/docker.gpg
+        sudo apt-get update
+        sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
     else
         echo "Docker 已安装。"
     fi
@@ -57,7 +53,9 @@ function install_jq() {
         echo "jq 已安装。"
         return 0
     fi
+
     echo "安装 jq..."
+
     if [[ "$(uname)" == "Darwin" ]]; then
         if command -v brew >/dev/null 2>&1; then
             brew install jq
@@ -88,6 +86,7 @@ function install_jq() {
 function fetch_file_from_repo() {
     local file_path="$1"
     local local_filename="$2"
+
     local download_url="https://raw.githubusercontent.com/farcasterxyz/hub-monorepo/@latest/$file_path?t=$(date +%s)"
     curl -sS -o "$local_filename" "$download_url" || { echo "下载 $download_url 失败。"; exit 1; }
 }
@@ -95,11 +94,13 @@ function fetch_file_from_repo() {
 # 安装 hubble 节点
 function install_node() {
     install_dependencies
+
     mkdir -p ~/hubble
     local tmp_file=$(mktemp)
     fetch_file_from_repo "scripts/hubble.sh" "$tmp_file"
     mv "$tmp_file" ~/hubble/hubble.sh
     chmod +x ~/hubble/hubble.sh
+
     cd ~/hubble
     exec ./hubble.sh "upgrade" < /dev/tty
 }
